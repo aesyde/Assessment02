@@ -3,7 +3,8 @@
     <string name="list_kosong">Belum ada data</string>
     <string name="x_diklik">%1$s diklik!</string>
     <string name="tambah_penulis">Tambah penulis</string>
-    <string name="belum_bisa">%1$s diklik!</string>
     <string name="judul">Judul</string>
     <string name="nama">Nama penulis</string>
+    <string name="kembali">Kembali</string>
+    <string name="simpan">Simpan</string>
 </resources>
