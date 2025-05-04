@@ -49,4 +49,8 @@ class MainViewModel : ViewModel() {
             "2025-02-19 11:22:50"
         )
     )
+
+    fun getPenulis(id: Long): Penulis? {
+        return data.find { it.id == id }
+    }
 }

@@ -89,15 +89,14 @@ fun MainScreen(navController: NavHostController) {
             }
         }
     ) { innerpadding ->
-        ScreenContent(Modifier.padding(innerpadding))
+        ScreenContent(Modifier.padding(innerpadding), navController)
     }
 }
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier) {
+fun ScreenContent(modifier: Modifier = Modifier, navController: NavHostController) {
     val viewModel: MainViewModel = viewModel()
     val data = viewModel.data
-    val context = LocalContext.current
 
     if (data.isEmpty()) {
         Column(
@@ -115,8 +114,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         ) {
             items(data) {
                 ListItem(penulis = it) {
-                    val pesan = context.getString(R.string.x_diklik, it.judul)
-                    Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screen.FormUbah.withId(it.id))
                 }
                 HorizontalDivider()
             }
