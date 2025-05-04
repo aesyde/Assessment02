@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fahrulredho0018.assessment02.model.Penulis
+import com.fahrulredho0018.assessment02.navigation.SetupNavGraph
 import com.fahrulredho0018.assessment02.screen.MainViewModel
 import com.fahrulredho0018.assessment02.ui.theme.Assessment02Theme
 
@@ -147,6 +148,6 @@ fun ListItem(penulis: Penulis, onClick: () -> Unit) {
 @Composable
 fun MainScreenPreview() {
     Assessment02Theme {
-        MainScreen()
+        SetupNavGraph()
     }
 }
