@@ -1,56 +1,22 @@
 package com.fahrulredho0018.assessment02.screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.fahrulredho0018.assessment02.database.PenulisDao
 import com.fahrulredho0018.assessment02.model.Penulis
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
-class MainViewModel : ViewModel() {
+class MainViewModel(dao: PenulisDao) : ViewModel() {
 
-    val data = listOf(
-        Penulis(
-            1,
-            "walah we",
-            "Suci",
-            "2025-02-17 12:34:56"
-        ),
-        Penulis(
-            2,
-            "aku adalah ironmen",
-            "Daffa",
-            "2025-02-19 11:22:50"
-        ),
-        Penulis(
-            3,
-            "aku adalah ironmen",
-            "Daffa",
-            "2025-02-19 11:22:50"
-        ),
-        Penulis(
-            4,
-            "aku adalah ironmen",
-            "Daffa",
-            "2025-02-19 11:22:50"
-        ),
-        Penulis(
-            5,
-            "aku adalah ironmen",
-            "Daffa",
-            "2025-02-19 11:22:50"
-        ),
-        Penulis(
-            6,
-            "aku adalah ironmen",
-            "Daffa",
-            "2025-02-19 11:22:50"
-        ),
-        Penulis(
-            7,
-            "aku adalah ironmen",
-            "Daffa",
-            "2025-02-19 11:22:50"
-        )
+    val data: StateFlow<List<Penulis>> = dao.getPenulis().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = emptyList()
     )
 
     fun getPenulis(id: Long): Penulis? {
-        return data.find { it.id == id }
+        return data.value.find { it.id == id }
     }
 }

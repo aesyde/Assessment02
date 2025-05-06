@@ -3,7 +3,7 @@ package com.fahrulredho0018.assessment02.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "catatan")
+@Entity(tableName = "penulis")
 data class Penulis(
     @PrimaryKey(autoGenerate = true)
     val id: Long,

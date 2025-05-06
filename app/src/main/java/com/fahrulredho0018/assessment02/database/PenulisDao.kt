@@ -16,6 +16,6 @@ interface PenulisDao {
     @Update
     suspend fun update(penulis: Penulis)
 
-    @Query("SELECT * FROM catatan ORDER BY tanggal DESC")
+    @Query("SELECT * FROM penulis ORDER BY tanggal DESC")
     fun getPenulis() : Flow<List<Penulis>>
 }
