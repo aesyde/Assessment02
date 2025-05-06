@@ -9,6 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PenulisDao {
+    @Query("SELECT * FROM penulis ORDER BY id DESC")
+    fun getPenulis(): Flow<List<Penulis>>
+
+    @Query("SELECT * FROM penulis WHERE id = :id")
+    suspend fun getPenulisById(id: Long): Penulis?
 
     @Insert
     suspend fun insert(penulis: Penulis)
@@ -16,6 +21,6 @@ interface PenulisDao {
     @Update
     suspend fun update(penulis: Penulis)
 
-    @Query("SELECT * FROM penulis ORDER BY tanggal DESC")
-    fun getPenulis() : Flow<List<Penulis>>
+    @Query("DELETE FROM penulis WHERE id = :id")
+    suspend fun deleteById(id: Long)
 }

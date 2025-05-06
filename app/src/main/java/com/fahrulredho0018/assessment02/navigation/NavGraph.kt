@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.fahrulredho0018.assessment02.MainScreen
 import com.fahrulredho0018.assessment02.screen.DetailScreen
-import com.fahrulredho0018.assessment02.screen.KEY_ID_CATATAN
+import com.fahrulredho0018.assessment02.screen.KEY_ID_BUKU
 
 
 @Composable
@@ -27,10 +27,10 @@ fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
         composable(
             route = Screen.FormUbah.route,
             arguments = listOf(
-                navArgument(KEY_ID_CATATAN) { type = NavType.LongType}
+                navArgument(KEY_ID_BUKU) { type = NavType.LongType}
             )
         ) { navBackStackEntry ->
-            val id = navBackStackEntry.arguments?.getLong(KEY_ID_CATATAN)
+            val id = navBackStackEntry.arguments?.getLong(KEY_ID_BUKU)
             DetailScreen(navController, id)
         }
     }

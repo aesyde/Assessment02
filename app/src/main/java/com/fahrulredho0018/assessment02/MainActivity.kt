@@ -38,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.fahrulredho0018.assessment02.model.Penulis
 import com.fahrulredho0018.assessment02.navigation.Screen
 import com.fahrulredho0018.assessment02.navigation.SetupNavGraph
@@ -52,7 +51,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Assessment02Theme {
-                MainScreen(rememberNavController())
+                SetupNavGraph()
             }
         }
     }
@@ -60,9 +59,9 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(navController: NavHostController){
 
-    Scaffold(
+    Scaffold (
         topBar = {
             TopAppBar(
                 title = {
@@ -70,38 +69,37 @@ fun MainScreen(navController: NavHostController) {
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor =  MaterialTheme.colorScheme.primary
                 )
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.FormBaru.route)
+                    navController.navigate(Screen.FormBaru.route) // PERBAIKI INI
                 }
             ) {
-                Icon(
+            Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = stringResource(R.string.tambah_penulis),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
-    ) { innerpadding ->
-        ScreenContent(Modifier.padding(innerpadding), navController)
+    ) { innerPadding ->
+        ScreenContent(Modifier.padding(innerPadding), navController)
     }
 }
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier, navController: NavHostController) {
+fun ScreenContent(modifier: Modifier = Modifier, navController: NavHostController){
     val context = LocalContext.current
     val factory = ViewModelFactory(context)
     val viewModel: MainViewModel = viewModel(factory = factory)
     val data by viewModel.data.collectAsState()
 
-
     if (data.isEmpty()) {
-        Column(
+        Column (
             modifier = modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -124,9 +122,10 @@ fun ScreenContent(modifier: Modifier = Modifier, navController: NavHostControlle
     }
 }
 
+
 @Composable
 fun ListItem(penulis: Penulis, onClick: () -> Unit) {
-    Column(
+    Column (
         modifier = Modifier.fillMaxWidth()
             .clickable { onClick() }
             .padding(16.dp),
@@ -137,14 +136,11 @@ fun ListItem(penulis: Penulis, onClick: () -> Unit) {
             overflow = TextOverflow.Ellipsis,
             fontWeight = FontWeight.Bold
         )
-        Text(text = penulis.namapenulis,
-                maxLines = 2,
+        Text(text = penulis.nama,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        Text(text = penulis.tanggal,
-                maxLines = 3,
-            overflow = TextOverflow.Ellipsis
-        )
+        Text(text = penulis.tanggal)
     }
 }
 

@@ -6,29 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fahrulredho0018.assessment02.model.Penulis
 
-@Database(entities = [Penulis::class], version = 1, exportSchema = false)
+@Database(entities = [Penulis::class], version = 1)
 abstract class PenulisDb : RoomDatabase() {
-
-    abstract val dao : PenulisDao
-
-    companion object{
-
+    abstract val dao: PenulisDao
+    companion object {
         @Volatile
         private var INSTANCE: PenulisDb? = null
-
         fun getInstance(context: Context): PenulisDb {
-            synchronized(this) {
-                var instance = INSTANCE
-
-                if (instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        PenulisDb::class.java,
-                        "penulis.db"
-                        ).build()
-                    INSTANCE = instance
-                }
-                return instance
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    PenulisDb::class.java,
+                    "penulis_db"
+                ).build()
+                INSTANCE = instance
+                instance
             }
         }
     }

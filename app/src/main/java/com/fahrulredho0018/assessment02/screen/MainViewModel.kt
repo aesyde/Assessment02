@@ -15,8 +15,4 @@ class MainViewModel(dao: PenulisDao) : ViewModel() {
         started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList()
     )
-
-    fun getPenulis(id: Long): Penulis? {
-        return data.value.find { it.id == id }
-    }
 }
