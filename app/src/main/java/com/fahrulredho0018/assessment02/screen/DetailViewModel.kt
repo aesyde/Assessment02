@@ -13,11 +13,12 @@ import java.util.Locale
 class DetailViewModel(private val dao: PenulisDao) : ViewModel() {
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
-    fun insert(judul: String, isi: String) {
+    fun insert(judul: String, isi: String, genre: String) {
         val penulis = Penulis(
             tanggal = formatter.format(Date()),
             judul = judul,
-            nama = isi
+            nama = isi,
+            kategori = genre
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -29,12 +30,13 @@ class DetailViewModel(private val dao: PenulisDao) : ViewModel() {
         return dao.getPenulisById(id)
     }
 
-    fun update(id: Long, judul: String, isi: String) {
+    fun update(id: Long, judul: String, isi: String, genre: String) {
         val penulis = Penulis(
             id      = id,
             tanggal = formatter.format(Date()),
             judul   = judul,
-            nama = isi
+            nama = isi,
+            kategori = genre
         )
 
         viewModelScope.launch(Dispatchers.IO) {

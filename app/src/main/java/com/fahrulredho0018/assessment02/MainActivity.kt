@@ -140,6 +140,7 @@ fun ListItem(penulis: Penulis, onClick: () -> Unit) {
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
+        Text(text = penulis.kategori)
         Text(text = penulis.tanggal)
     }
 }

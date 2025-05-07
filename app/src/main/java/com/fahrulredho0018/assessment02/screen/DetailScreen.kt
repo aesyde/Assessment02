@@ -2,11 +2,18 @@ package com.fahrulredho0018.assessment02.screen
 
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -19,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -29,9 +37,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,12 +65,15 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
 
     var judul by remember { mutableStateOf("") }
     var penulis by remember { mutableStateOf("") }
+    var genre by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (id == null) return@LaunchedEffect
         val data = viewModel.getPenulis(id) ?: return@LaunchedEffect
         judul = data.judul
         penulis = data.nama
+        genre = data.kategori
     }
 
     Scaffold(
@@ -92,9 +106,9 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                         }
 
                         if (id == null) {
-                            viewModel.insert(judul, penulis)
+                            viewModel.insert(judul, penulis, genre)
                         } else {
-                            viewModel.update(id, judul,penulis)
+                            viewModel.update(id, judul,penulis, genre)
                         }
                         navController.popBackStack()
                     }) {
@@ -106,8 +120,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
                     }
                     if (id != null) {
                         DeleteAction {
-                            viewModel.delete(id)
-                            navController.popBackStack()
+                            showDialog = true
                         }
                     }
                 }
@@ -119,8 +132,18 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
             onTitleChange = {judul = it},
             desc = penulis,
             onDescChange = {penulis = it},
+            selectedKatagori = genre,
+            onKatagoriChange = {genre = it},
             modifier = Modifier.padding(padding)
         )
+        if (id != null && showDialog) {
+            DisplayAlertDialog(
+                    onDismissRequest = { showDialog = false}) {
+                    showDialog = false
+                    viewModel.delete(id)
+                    navController.popBackStack()
+            }
+        }
     }
 }
 
@@ -128,6 +151,7 @@ fun DetailScreen(navController: NavHostController, id: Long? = null) {
 fun FormCatatan(
     title: String, onTitleChange: (String) -> Unit,
     desc: String, onDescChange: (String) -> Unit,
+    selectedKatagori: String,onKatagoriChange: (String) -> Unit,
     modifier: Modifier
 ) {
     Column (
@@ -158,6 +182,10 @@ fun FormCatatan(
             ),
             modifier = Modifier.fillMaxWidth()
         )
+        RadioButtonKatagori(
+            selectedKatagori = selectedKatagori,
+            onKatagoriChange = onKatagoriChange
+        )
     }
 }
 
@@ -183,6 +211,50 @@ fun DeleteAction(delete: () -> Unit) {
                     delete()
                 }
             )
+        }
+    }
+}
+
+@Composable
+fun RadioButtonKatagori(
+    selectedKatagori: String,
+    onKatagoriChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val radioOptions = listOf("komedi", "horor", "fantasi", "petualangan")
+    Column (
+        modifier = modifier
+            .fillMaxWidth()
+            .border(
+                BorderStroke(1.dp, Color.Gray),
+                shape = RoundedCornerShape(4.dp)
+            )
+    ) {
+        Column(modifier.selectableGroup()) {
+            radioOptions.forEach { text ->
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .selectable(
+                            selected = (text == selectedKatagori),
+                            onClick = { onKatagoriChange(text) },
+                            role = Role.RadioButton
+                        )
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = (text == selectedKatagori),
+                        onClick = null
+                    )
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+            }
         }
     }
 }

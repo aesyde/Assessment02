@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fahrulredho0018.assessment02.model.Penulis
 
-@Database(entities = [Penulis::class], version = 1)
+@Database(entities = [Penulis::class], version = 2)
 abstract class PenulisDb : RoomDatabase() {
     abstract val dao: PenulisDao
     companion object {
@@ -18,7 +18,7 @@ abstract class PenulisDb : RoomDatabase() {
                     context.applicationContext,
                     PenulisDb::class.java,
                     "penulis_db"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }

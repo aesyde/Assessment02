@@ -9,5 +9,6 @@ data class Penulis(
     val id: Long = 0,
     val judul: String,
     val nama: String,
+    val kategori : String,
     val tanggal: String
 )
