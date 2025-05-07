@@ -203,6 +203,7 @@ fun GridItem(penulis: Penulis, onClick: () -> Unit) {
     }
 }
 
+
 @Composable
 fun ListItem(penulis: Penulis, onClick: () -> Unit) {
     Column (
