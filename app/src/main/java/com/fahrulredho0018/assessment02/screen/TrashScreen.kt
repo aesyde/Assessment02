@@ -100,10 +100,9 @@ fun TrashContent(modifier: Modifier = Modifier) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     ListItem(
                         penulis = penulis,
-                        onClick = { /* kosongkan atau pakai jika perlu */ }
+                        onClick = {  }
                     )
 
-                    // MoreVert di pojok kanan atas item
                     var expanded by remember { mutableStateOf(false) }
 
                     Box(

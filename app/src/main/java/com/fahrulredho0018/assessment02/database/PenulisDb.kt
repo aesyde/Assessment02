@@ -18,7 +18,6 @@ abstract class PenulisDb : RoomDatabase() {
         @Volatile
         private var INSTANCE: PenulisDb? = null
 
-        // Migrasi dari versi 1 ke versi 2: Tambahkan kolom isDeleted
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
@@ -37,7 +36,7 @@ abstract class PenulisDb : RoomDatabase() {
                         PenulisDb::class.java,
                         "event.db"
                     )
-                        .addMigrations(MIGRATION_1_2) // Tambahkan migrasi di sini
+                        .addMigrations(MIGRATION_1_2)
                         .build()
                     INSTANCE = instance
                 }
