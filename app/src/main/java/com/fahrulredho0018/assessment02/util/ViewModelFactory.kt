@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.fahrulredho0018.assessment02.database.PenulisDb
 import com.fahrulredho0018.assessment02.screen.DetailViewModel
 import com.fahrulredho0018.assessment02.screen.MainViewModel
+import com.fahrulredho0018.assessment02.screen.TrashViewModel
 
 class ViewModelFactory ( private val context: Context ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
@@ -15,6 +16,8 @@ class ViewModelFactory ( private val context: Context ) : ViewModelProvider.Fact
             return MainViewModel(dao) as T
         } else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             return DetailViewModel(dao) as T
+        } else if (modelClass.isAssignableFrom(TrashViewModel::class.java)) {
+            return TrashViewModel(dao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

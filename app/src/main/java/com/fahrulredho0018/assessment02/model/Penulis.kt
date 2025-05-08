@@ -10,5 +10,6 @@ data class Penulis(
     val judul: String,
     val nama: String,
     val kategori : String,
-    val tanggal: String
+    val tanggal: String,
+    val isDeleted: Boolean = false
 )

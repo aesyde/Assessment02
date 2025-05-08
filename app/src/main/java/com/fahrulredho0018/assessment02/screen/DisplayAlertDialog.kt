@@ -6,7 +6,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.fahrulredho0018.assessment02.R
-import com.fahrulredho0018.assessment02.ui.theme.Assessment02Theme
 
 @Composable
 fun DisplayAlertDialog(
@@ -27,14 +26,4 @@ fun DisplayAlertDialog(
         },
         onDismissRequest = { onDismissRequest() }
     )
-}
-
-@Composable
-fun DialogPreview() {
-    Assessment02Theme {
-        DisplayAlertDialog(
-            onDismissRequest = {},
-            onConfirmation = {}
-        )
-    }
 }
